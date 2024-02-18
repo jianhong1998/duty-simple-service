@@ -3,6 +3,7 @@ import { UserDBService } from '../services/user.db.service';
 import { AllowAccountTypes } from 'src/common/custom-decorators/allow-account-types.decorator';
 import { UserAccountType } from '../enums/user-account-type.type';
 import {
+    ApiBearerAuth,
     ApiForbiddenResponse,
     ApiOkResponse,
     ApiTags,
@@ -12,6 +13,7 @@ import { GetAllUserResponseDTO } from '../dto/get-all-user-response.dto';
 import { HttpExceptionDTO } from 'src/common/dto/http-exception/http-exception.dto';
 
 @ApiTags('User')
+@ApiBearerAuth()
 @Controller('/user')
 export class UserController {
     constructor(private userDBService: UserDBService) {}

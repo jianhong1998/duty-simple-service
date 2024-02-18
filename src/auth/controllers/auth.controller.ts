@@ -7,6 +7,7 @@ import {
     ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { HttpExceptionDTO } from 'src/common/dto/http-exception/http-exception.dto';
+import { Public } from 'src/common/custom-decorators/public.decorator';
 
 @ApiTags('Auth')
 @Controller('/auth')
@@ -14,6 +15,7 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post('/')
+    @Public()
     @HttpCode(200)
     @ApiOkResponse({
         description: 'User login successfully',

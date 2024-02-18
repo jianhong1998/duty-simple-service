@@ -37,8 +37,12 @@ export class AuthService {
         const token = this.tokenService.generateToken({ userId: user.id });
 
         return {
+            isLoginSuccess: true,
             token,
             userAccountType: user.accountType,
+            userAccountStatus: user.accountStatus,
+            employeeId: 0,
+            name: '',
         };
     }
 }

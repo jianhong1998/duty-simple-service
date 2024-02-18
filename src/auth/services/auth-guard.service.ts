@@ -9,6 +9,8 @@ import { UserDBService } from 'src/user/services/user.db.service';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from 'src/common/custom-decorators/public.decorator';
 import { Request } from 'express';
+import { AllowAccountTypes } from 'src/common/custom-decorators/allow-account-types.decorator';
+import { UserAccountType } from 'src/user/enums/user-account-type.type';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
@@ -41,11 +43,18 @@ export class AuthGuardService implements CanActivate {
             token,
         );
 
-        const user = this.userDBService.getOne({ id: userId });
+        const user = await this.userDBService.getOne({ id: userId });
 
         request['user'] = user;
 
-        return true;
+        const allowedAccountTypes = this.reflector.get(
+            AllowAccountTypes,
+            context.getHandler(),
+        );
+
+        if (!allowedAccountTypes) return true;
+
+        return this.isAccountTypeAllowed(user.accountType, allowedAccountTypes);
     }
 
     private extractTokenFromRequest(request: Request): string {
@@ -55,5 +64,12 @@ export class AuthGuardService implements CanActivate {
             throw new UnauthorizedException('Token is invalid.');
 
         return token;
+    }
+
+    private isAccountTypeAllowed(
+        currentUserAccountType: UserAccountType,
+        allowedAccountTypes: UserAccountType[],
+    ): boolean {
+        return allowedAccountTypes.includes(currentUserAccountType);
     }
 }

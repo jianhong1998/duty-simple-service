@@ -21,6 +21,12 @@ export class User1708223187429 implements Seeder {
                 accountStatus: UserAccountStatus.ACTIVE,
                 accountType: UserAccountType.MANAGER,
             },
+            {
+                emailAddress: 'user@test.com',
+                password: hashSync('password', 10),
+                accountStatus: UserAccountStatus.ACTIVE,
+                accountType: UserAccountType.SERVICE_CREW,
+            },
         ]);
 
         const userFactory = factoryManager.get(UserModel);

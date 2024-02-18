@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserModel } from '../models/user.model';
 import { FindOptionsWhere, Repository } from 'typeorm';
@@ -12,12 +12,8 @@ export class UserDBService {
 
     public async getOne(
         condition: FindOptionsWhere<UserModel>,
-    ): Promise<IUser> {
+    ): Promise<IUser | null> {
         const user = await this.userRepo.findOneBy(condition);
-
-        if (!user) {
-            throw new NotFoundException('User is not found.');
-        }
 
         return user;
     }

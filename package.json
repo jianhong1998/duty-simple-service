@@ -20,10 +20,10 @@
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "typeorm": " ts-node -r dotenv/config ./node_modules/typeorm/cli.js -d dist/config/data-source.js",
-        "typeorm-extension": "ts-node -r dotenv/config ./node_modules/typeorm-extension/bin/cli.cjs",
-        "migration:generate": "npm run typeorm -- migration:generate -p",
+        "typeorm-extension": "ts-node -r dotenv/config ./node_modules/typeorm-extension/bin/cli.cjs -d dist/config/data-source.js",
+        "migration:generate": "npm run build && npm run typeorm -- migration:generate -p",
         "migration:run": "npm run typeorm -- migration:run",
-        "seed:run": "npm run typeorm-extension -- seed:run -d dist/config/data-source.js",
+        "seed:run": "npm run typeorm-extension -- seed:run",
         "migration:revert:all": "node -e \"const execSync = require('child_process').execSync; let output; do { output = execSync('npm run typeorm -- migration:revert').toString(); console.log(output); } while (!output.includes('Nothing to revert!'))\""
     },
     "dependencies": {

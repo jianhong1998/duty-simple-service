@@ -10,9 +10,9 @@ const options: DataSourceOptions & SeederOptions = {
     database: process.env.DB_NAME || 'hospital_app',
     synchronize: process.env.NODE_ENV !== 'development',
     entities: ['dist/**/*.model{.js,.ts}'],
-    migrations: ['dist/db/migrations/**/*{.js,.ts}'],
-    seeds: ['dist/db/seeders/**/*{.js,.ts}'],
-    factories: ['dist/db/factories/**/*{.js,.ts}'],
+    migrations: ['dist/src/db/migrations/**/*{.js,.ts}'],
+    seeds: ['dist/src/db/seeders/**/*{.js,.ts}'],
+    factories: ['dist/src/db/factories/**/*{.js,.ts}'],
     seedTracking: false,
 };
 

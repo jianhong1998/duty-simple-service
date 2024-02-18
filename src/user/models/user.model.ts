@@ -35,7 +35,7 @@ export class UserModel implements IUser {
     @Column({
         type: 'enum',
         enum: UserAccountStatus,
-        enumName: 'enum_user_account_type',
+        enumName: 'enum_user_account_status',
         name: 'account_status',
     })
     accountStatus: UserAccountStatus;

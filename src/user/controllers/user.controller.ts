@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UserDBService } from '../services/user.db.service';
 import { AllowAccountTypes } from 'src/common/custom-decorators/allow-account-types.decorator';
 import { UserAccountType } from '../enums/user-account-type.type';
 import {
@@ -23,10 +22,7 @@ import { UserService } from '../services/user.service';
 @ApiBearerAuth()
 @Controller('/user')
 export class UserController {
-    constructor(
-        private userDBService: UserDBService,
-        private userService: UserService,
-    ) {}
+    constructor(private userService: UserService) {}
 
     @Get('/')
     @ApiOkResponse({
@@ -42,9 +38,7 @@ export class UserController {
     })
     @AllowAccountTypes([UserAccountType.MANAGER])
     async getAllUsers(): Promise<GetAllUserResponseDTO> {
-        const users = await this.userDBService.getAll();
-
-        return new GetAllUserResponseDTO(users);
+        return this.userService.getAllUsers();
     }
 
     @Post('/')
